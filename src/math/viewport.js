@@ -1,8 +1,8 @@
 import { Matrix4x4 } from './matrix4x4';
 
 export const createViewportMatrix = (
-  worldWidth = 10,
-  worldHeight = 10,
+  worldWidth = 50,
+  worldHeight = 50,
   screenWidth = 480,
   screenHeight = 480,
 ) => {
@@ -17,8 +17,8 @@ export const createViewportMatrix = (
 };
 
 export const createReverseViewportMatrix = (
-  worldWidth = 10,
-  worldHeight = 10,
+  worldWidth = 50,
+  worldHeight = 50,
   screenWidth = 480,
   screenHeight = 480,
 ) => {
