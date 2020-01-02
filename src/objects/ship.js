@@ -2,7 +2,7 @@ import Konva from 'konva';
 
 import * as constants from '../util/constants';
 import { defaultViewportMatrix } from '../util';
-import { Vector3 } from '../math/vector3';
+import { Vector3 } from '../math';
 import { Steering } from '../steering';
 
 const points = [
@@ -48,7 +48,7 @@ export class Ship {
     const x = this.steering.xAxis;
     const y = this.steering.yAxis;
 
-    this.acceleration = new Vector3(x, y);
+    this.acceleration = new Vector3(x, y).add(constants.accelerationGravity);
     const timeSeconds = timeDiff / 1000;
 
     const velocityDelta = this.acceleration.multiplyScalar(timeSeconds);
