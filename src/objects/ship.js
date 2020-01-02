@@ -4,6 +4,7 @@ import * as constants from '../util/constants';
 import { defaultViewportMatrix, mapPoints } from '../util';
 import { Vector3 } from '../math';
 import { Steering } from '../steering';
+import { ShipExplosion } from './shipExplosion';
 
 const SHIP_WIDTH_HALVED = 0.5;
 const WORLD_WIDTH_HALVED = constants.WORLD_WIDTH / 2;
@@ -32,6 +33,9 @@ export class Ship {
     this.acceleration = new Vector3();
 
     this.steering = new Steering();
+
+    this.shipExplosion = new ShipExplosion();
+    this.destroyed = false;
   }
 
   init(layer) {
@@ -39,6 +43,10 @@ export class Ship {
   }
 
   update(timeDiff) {
+    if (this.destroyed) {
+      return;
+    }
+
     const x = this.steering.xAxis;
     const y = this.steering.yAxis;
 
@@ -72,5 +80,13 @@ export class Ship {
 
     this.polygon.x(transformedLocation.x - (constants.SCREEN_WIDTH / 2));
     this.polygon.y(transformedLocation.y - (constants.SCREEN_HEIGHT / 2));
+
+    this.shipExplosion.update(timeSeconds);
+  }
+
+  destroy() {
+    this.shipExplosion.init(this.location);
+    this.polygon.remove();
+    this.destroyed = true;
   }
 }
