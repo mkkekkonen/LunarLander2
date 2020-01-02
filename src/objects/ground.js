@@ -16,21 +16,41 @@ export const getXCoord = index => {
 export class Ground {
   constructor() {
     this.polygon = undefined;
+    this.landingPlatformLine = undefined;
     this.points = undefined;
+    this.landingPlatformIndex = 0;
   }
 
   init(layer) {
-    this.yCoords = [];
+    this.points = [];
+
+    this.landingPlatformIndex = util.getRandomInt(0, N_POINTS - 1);
+
+    let lastY = undefined;
 
     for (let i = 0; i < N_POINTS; i++) {
-      this.yCoords.push(new Vector3(getXCoord(i), util.getRandomInt(MIN_Y, MAX_Y)));
+      const y = util.getRandomInt(MIN_Y, MAX_Y);
+      this.points.push(new Vector3(getXCoord(i), i !== this.landingPlatformIndex + 1 ? y : lastY));
+      lastY = y;
     }
 
     this.polygon = new Konva.Line({
-      points: util.mapPoints(this.yCoords),
+      points: util.mapPoints(this.points),
+      stroke: constants.FOREGROUND_COLOR,
+    });
+
+    const firstLandingPlatformPoint = util.defaultViewportMatrix.multiplyVector(this.points[this.landingPlatformIndex]);
+    const secondLandingPlatformPoint = util.defaultViewportMatrix.multiplyVector(this.points[this.landingPlatformIndex + 1]);
+
+    this.landingPlatformLine = new Konva.Line({
+      points: [
+        firstLandingPlatformPoint.x, firstLandingPlatformPoint.y + 5,
+        secondLandingPlatformPoint.x, secondLandingPlatformPoint.y + 5,
+      ],
       stroke: constants.FOREGROUND_COLOR,
     });
 
     layer.add(this.polygon);
+    layer.add(this.landingPlatformLine);
   }
 }
