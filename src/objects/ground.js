@@ -9,8 +9,8 @@ const MAX_Y = 10;
 const N_POINTS = 51;
 
 export const getXCoord = index => {
-  const interval = constants.WORLD_WIDTH / 2 / (N_POINTS - 1);
-  return -(constants.WORLD_WIDTH / 4) + (index * interval);
+  const interval = constants.WORLD_WIDTH / (N_POINTS - 1);
+  return -(constants.WORLD_WIDTH / 2) + (index * interval);
 };
 
 export class Ground {

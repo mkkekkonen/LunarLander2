@@ -5,6 +5,10 @@ import { defaultViewportMatrix, mapPoints } from '../util';
 import { Vector3 } from '../math';
 import { Steering } from '../steering';
 
+const SHIP_WIDTH_HALVED = 0.5;
+const WORLD_WIDTH_HALVED = constants.WORLD_WIDTH / 2;
+const WORLD_HEIGHT_HALVED = constants.WORLD_HEIGHT / 2;
+
 const points = [
   new Vector3(0, 0.5),
   new Vector3(-0.5, 0.5),
@@ -38,14 +42,31 @@ export class Ship {
     const x = this.steering.xAxis;
     const y = this.steering.yAxis;
 
-    this.acceleration = new Vector3(x, y).add(constants.accelerationGravity);
     const timeSeconds = timeDiff / 1000;
+
+    this.acceleration = new Vector3(x, y).add(constants.accelerationGravity);
 
     const velocityDelta = this.acceleration.multiplyScalar(timeSeconds);
     this.velocity = this.velocity.add(velocityDelta);
 
     const locationDelta = this.velocity.multiplyScalar(timeSeconds);
     this.location = this.location.add(locationDelta);
+
+    if (this.location.x > WORLD_WIDTH_HALVED - SHIP_WIDTH_HALVED) {
+      this.acceleration.x = 0;
+      this.velocity.x = 0;
+      this.location.x = WORLD_WIDTH_HALVED - SHIP_WIDTH_HALVED;
+    } else if (this.location.x < -WORLD_WIDTH_HALVED + SHIP_WIDTH_HALVED) {
+      this.acceleration.x = 0;
+      this.velocity.x = 0;
+      this.location.x = -WORLD_WIDTH_HALVED + SHIP_WIDTH_HALVED;
+    }
+
+    if (this.location.y > WORLD_HEIGHT_HALVED - SHIP_WIDTH_HALVED) {
+      this.acceleration.y = 0;
+      this.velocity.y = 0;
+      this.location.y = WORLD_HEIGHT_HALVED - SHIP_WIDTH_HALVED;
+    }
 
     const transformedLocation = defaultViewportMatrix.multiplyVector(this.location);
 
