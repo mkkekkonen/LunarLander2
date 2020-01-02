@@ -25,4 +25,6 @@ module.exports = {
     contentBase: path.join(__dirname, 'public'),
     port: 9000
   },
+
+  devtool: 'source-map',
 };

@@ -2,6 +2,8 @@ import Konva from 'konva';
 
 import * as constants from './util/constants';
 import { Ship } from './objects/ship';
+import { Ground } from './objects/ground';
+import { Vector3 } from './math';
 
 const stage = new Konva.Stage({
   container: 'game',
@@ -11,8 +13,11 @@ const stage = new Konva.Stage({
 
 const layer = new Konva.Layer();
 
-const ship = new Ship();
+const ship = new Ship(new Vector3(0, 20));
 ship.init(layer);
+
+const ground = new Ground();
+ground.init(layer);
 
 stage.add(layer);
 

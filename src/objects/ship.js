@@ -1,7 +1,7 @@
 import Konva from 'konva';
 
 import * as constants from '../util/constants';
-import { defaultViewportMatrix } from '../util';
+import { defaultViewportMatrix, mapPoints } from '../util';
 import { Vector3 } from '../math';
 import { Steering } from '../steering';
 
@@ -16,22 +16,12 @@ const points = [
   new Vector3(-0.25, 0.75),
 ];
 
-const mapPoints = () => {
-  const mappedPoints = [];
-  points.forEach(point => {
-    const transformedPoint = defaultViewportMatrix.multiplyVector(point);
-    mappedPoints.push(transformedPoint.x);
-    mappedPoints.push(transformedPoint.y);
-  });
-  return mappedPoints;
-};
-
 export class Ship {
   constructor(location) {
     this.location = location || new Vector3();
     this.polygon = new Konva.Line({
-      points: mapPoints(),
-      stroke: constants.SHIP_COLOR,
+      points: mapPoints(points),
+      stroke: constants.FOREGROUND_COLOR,
       closed: true,
     });
     this.velocity = new Vector3();
@@ -59,7 +49,7 @@ export class Ship {
 
     const transformedLocation = defaultViewportMatrix.multiplyVector(this.location);
 
-    this.polygon.x(transformedLocation.x);
-    this.polygon.y(transformedLocation.y);
+    this.polygon.x(transformedLocation.x - (constants.SCREEN_WIDTH / 2));
+    this.polygon.y(transformedLocation.y - (constants.SCREEN_HEIGHT / 2));
   }
 }

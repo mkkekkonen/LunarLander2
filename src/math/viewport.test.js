@@ -8,7 +8,7 @@ it('creates correct viewport matrix', () => {
     [64, 0, 0, 0],
     [0, -48, 0, 0],
     [0, 0, 1, 0],
-    [320, 240, 0, 1],
+    [160, 120, 0, 1],
   ]);
   expect(A).toEqual(expectedResult);
 });
@@ -19,7 +19,7 @@ it('creates correct reverse viewport matrix', () => {
     [10/640, 0, 0, 0],
     [0, -10/480, 0, 0],
     [0, 0, 1, 0],
-    [-5, 5, 0, 1]
+    [-2.5, 2.5, 0, 1]
   ]);
   expect(A).toEqual(expectedResult);
 });
@@ -29,7 +29,7 @@ describe('vector transform', () => {
     const A = createViewportMatrix(10, 10, 640, 480);
     const v = new Vector3(2, 2, 0);
     const resultant = A.multiplyVector(v);
-    const expectedResult = new Vector3(448, 144, 0);
+    const expectedResult = new Vector3(288, 24, 0);
     expect(resultant).toEqual(expectedResult);
   });
 
@@ -37,7 +37,7 @@ describe('vector transform', () => {
     const A = createReverseViewportMatrix(10, 10, 640, 480);
     const v = new Vector3(448, 144, 0);
     const resultant = A.multiplyVector(v);
-    const expectedResult = new Vector3(2, 2, 0);
+    const expectedResult = new Vector3(4.5, -0.5, 0);
     expect(resultant).toEqual(expectedResult);
   });
 });
