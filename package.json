@@ -12,7 +12,8 @@
   "license": "CC-BY-4.0",
   "dependencies": {
     "konva": "^4.1.0",
-    "mathjs": "^6.2.5"
+    "mathjs": "^6.2.5",
+    "mousetrap": "^1.6.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",

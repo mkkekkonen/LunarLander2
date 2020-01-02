@@ -10,9 +10,14 @@ const stage = new Konva.Stage({
 });
 
 const layer = new Konva.Layer();
-stage.add(layer);
 
 const ship = new Ship();
 ship.init(layer);
 
-layer.draw();
+stage.add(layer);
+
+const animation = new Konva.Animation(function(frame) {
+  ship.update(frame.timeDiff);
+}, layer);
+
+animation.start();
