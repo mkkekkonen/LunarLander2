@@ -22,4 +22,12 @@ export class Vector3 {
     return Math.sqrt(((vector.x - this.x) ** 2)
       + ((vector.y - this.y) ** 2));
   }
+
+  equals(v) {
+    return this.x === v.x && this.y === v.y && this.z === v.z;
+  }
+
+  toString() {
+    return `(${this.x}, ${this.y}, ${this.z})`;
+  }
 }

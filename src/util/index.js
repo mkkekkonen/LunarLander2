@@ -18,3 +18,5 @@ export const mapPoints = points => {
   });
   return mappedPoints;
 };
+
+export const round = n => Math.round(n * 100) / 100;
