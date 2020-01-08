@@ -25,4 +25,8 @@ export class LineEquation {
   static convertLine(line) {
     return new LineEquation(line.slope, (line.slope * (-line.startPoint.x)) + line.startPoint.y);
   }
+
+  getY(x) {
+    return this.slope * x + this.yIntercept;
+  }
 }

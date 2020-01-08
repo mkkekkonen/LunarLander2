@@ -23,6 +23,9 @@ stage.add(layer);
 
 const animation = new Konva.Animation(function(frame) {
   ship.update(frame.timeDiff);
+  if (ground.intersectsObject(ship.lines)) {
+    ship.destroy();
+  }
 }, layer);
 
 animation.start();

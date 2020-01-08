@@ -2,7 +2,7 @@ import Konva from 'konva';
 
 import * as util from '../util';
 import * as constants from '../util/constants';
-import { Vector3 } from '../math';
+import { Vector3, Line } from '../math';
 
 const MIN_Y = -20;
 const MAX_Y = 10;
@@ -19,6 +19,21 @@ export class Ground {
     this.landingPlatformLine = undefined;
     this.points = undefined;
     this.landingPlatformIndex = 0;
+  }
+
+  get lines() {
+    if (!this.points) {
+      return [];
+    }
+
+    const lines = [];
+
+    for (let i = 0; i < this.points.length - 1; i++) {
+      const line = new Line(this.points[i], this.points[i + 1]);
+      lines.push(line);
+    }
+
+    return lines;
   }
 
   init(layer) {
@@ -52,5 +67,17 @@ export class Ground {
 
     layer.add(this.polygon);
     layer.add(this.landingPlatformLine);
+  }
+
+  intersectsObject(objectLines) {
+    for (const groundLine of this.lines) {
+      for (const objectLine of objectLines) {
+        if (groundLine.lineSegmentIntersects(objectLine)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

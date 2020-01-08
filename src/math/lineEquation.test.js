@@ -33,3 +33,12 @@ it('converts line correctly', () => {
 
   expect(LineEquation.convertLine(line)).toEqual(expectedResult);
 });
+
+test('test', () => {
+  const verticalLine = new Line(new Vector3(1, -0.5), new Vector3(1, -1.5));
+  const intersectingLine = new Line(new Vector3(0, -2), new Vector3(2, 0));
+
+  const expectedResult = new Vector3(1, -1);
+
+  expect(intersectingLine.intersects(verticalLine)).toEqual(expectedResult);
+})
